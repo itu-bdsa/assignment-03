@@ -19,7 +19,7 @@ public class TagRepository : ITagRepository
         }
         Tag tg = new Tag();
         tg.Name = tag.Name;
-        return (Response.Created, tg.Id);                         // Should maybe be switched to another Id
+        return (Response.Created, tg.Id);
     }
 
     public IReadOnlyCollection<TagDTO> ReadAll()
