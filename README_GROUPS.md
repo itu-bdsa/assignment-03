@@ -22,7 +22,7 @@
 * Group 22: clly, biha, sibh
 * Group 23: chbl, luha, siar
 * Group 24: vime, okre
-* Group 25: stmp, mbjn
+* Group 25: stmp
 * Group 26: crco, rogy, jwni
 * Group 27: elbr, kbej, emno
 * Group 28: dadh, jric, frgm
@@ -44,3 +44,4 @@
 * Group 44: shad, husa, omac
 * Group 45: nidd, tael, jevb, aegr
 * Group 46: phla, unla
+* Group 47: mbjn
