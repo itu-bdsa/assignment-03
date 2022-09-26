@@ -35,4 +35,7 @@ sequenceDiagram
     John-->>-Alice: I feel great!
 ```
 
+```mermaid
+sequenceDiagram
 
+```
