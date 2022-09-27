@@ -13,7 +13,7 @@
 * Group 13: aldy, nihp, jklo
 * Group 14: rasni, jakst, nkar, vime
 * Group 15: midf, laup, mlth
-* Group 16: pekp, weny, nkrj
+* Group 16: pekp, weny, nkrj, okre
 * Group 17: ssbo, gues, vist
 * Group 18: tuka
 * Group 19: avia, tokj, mbia
@@ -21,7 +21,7 @@
 * Group 21: frhc, selb, bath
 * Group 22: clly, biha, sibh
 * Group 23: chbl, luha, siar
-* Group 24: okre
+* Group 24: 
 * Group 25: stmp, mbjn
 * Group 26: crco, rogy, jwni
 * Group 27: elbr, kbej, emno
