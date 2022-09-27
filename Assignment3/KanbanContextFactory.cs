@@ -5,7 +5,7 @@ using Microsoft.Extensions.Configuration;
 
 namespace Assignment3
 {
-    internal class KanbanContextFactory : IDesignTimeDbContextFactory<KanbanContext>
+    public class KanbanContextFactory : IDesignTimeDbContextFactory<KanbanContext>
     {
         public KanbanContext CreateDbContext(string[] args)
         {
@@ -15,7 +15,11 @@ namespace Assignment3
             var optionsBuilder = new DbContextOptionsBuilder<KanbanContext>();
             optionsBuilder.UseNpgsql(connectionString);
 
-            return new KanbanContext(optionsBuilder.Options);
+            var context = new KanbanContext(optionsBuilder.Options);
+            context.Users.Include(u => u.Tasks).ToList();
+            context.Tags.Include(t => t.Tasks).ToList();
+            context.Tasks.Include(t => t.Tags).ToList();
+            return context;
         }
     }
 }
