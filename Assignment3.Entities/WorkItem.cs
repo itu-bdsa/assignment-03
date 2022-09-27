@@ -1,6 +1,6 @@
 namespace Assignment3.Entities;
 
-public partial class Task
+public partial class WorkItem
 {
     public int Id { get; set; }
     public string Title { get; set; }
