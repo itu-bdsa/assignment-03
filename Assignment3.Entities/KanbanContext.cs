@@ -23,20 +23,24 @@ public partial class KanbanContext : DbContext
         {
             modelBuilder.Entity<User>(entity =>
             {
-                entity.Property(e => e.Name).HasMaxLength(100);
-                entity.Property(e => e.Email).HasMaxLength(100);
+                entity.Property(e => e.Name).HasMaxLength(100).IsRequired();
+                entity.Property(e => e.Email).HasMaxLength(100).IsRequired();
                 entity.HasIndex(u => u.Email).IsUnique();
             });
 
             modelBuilder.Entity<Tag>(entity =>
             {
-                entity.Property(e => e.Name).HasMaxLength(50);
+                entity.Property(e => e.Name).HasMaxLength(50).IsRequired();
+                entity.HasMany<WorkItem>(s => s.WorkItems)
+                .WithMany(c => c.Tags);
+
 
             });
 
-            modelBuilder.Entity<WorkItem>(entity => {
-                entity.Property(e => e.Title).HasMaxLength(50);
-                entity.Property(e => e.state).HasConversion(new EnumToStringConverter<State>());
+            modelBuilder.Entity<WorkItem>(entity => 
+            {
+                entity.Property(e => e.Title).HasMaxLength(50).IsRequired();
+                entity.Property(e => e.state).HasConversion(new EnumToStringConverter<State>()).IsRequired();
                 entity.HasMany<Tag>(s => s.Tags)
                 .WithMany(c => c.WorkItems);
             });
