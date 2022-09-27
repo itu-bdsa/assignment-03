@@ -108,7 +108,7 @@ In the following exercises, whenever you are asked to draw a UML diagram do that
 Draw a UML class diagram that models the following specifications:
 
   * A project has a name, a start date, and an end date.
-  * A project is associated to a project manager, a name, a telephone, and a team.
+  * A project is associated to a project manager with a name, a telephone, and a team.
   * A project manager manages (by starting and terminating) a project and leads a team that is associated with a project.
   * Projects receive as input requirements and produce a system. Both requirements and the system have a completion percentage and a description.
   * Each team is composed by developers.
