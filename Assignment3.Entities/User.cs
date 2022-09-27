@@ -10,5 +10,11 @@ public class User
 
    public List<WorkItem> WorkItems { get; set; }
 
+   public User(string name, string email) {
+      Name = name;
+
+      Email = email;
+   }
+
 
 }

@@ -14,7 +14,7 @@ public partial class KanbanContext : DbContext
         {
         }
 
-    public virtual DbSet<Task> Tasks { get; set; } = null!;
+    public virtual DbSet<WorkItem> WorkItems { get; set; } = null!;
     public virtual DbSet<User> Users { get; set; } = null!;
     public virtual DbSet<Tag> Tags { get; set; } = null!;
 
