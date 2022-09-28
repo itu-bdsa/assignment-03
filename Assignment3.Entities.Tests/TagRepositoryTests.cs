@@ -37,7 +37,6 @@ public class TagRepositoryTests : IDisposable
 
     }
 
-
     [Fact]
     public void Given_new_tag_returns_tag()
     {
@@ -93,7 +92,17 @@ public class TagRepositoryTests : IDisposable
         tag.Should().Be(null);
     }
 
+    [Fact]
+    public void Create_tag_that_already_exist_returns_conflict() {
+        // Arrange
+        var tagDTO = new TagCreateDTO("Tag4");
 
+        // Act
+        var (state, id) = _repository.Create(tagDTO);
+
+        // Assert
+        state.Should().Be(Response.Conflict);
+    }
 
     public void Dispose()
     {
