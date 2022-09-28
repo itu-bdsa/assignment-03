@@ -50,7 +50,7 @@ public class TagRepository : ITagRepository
 
         var tasksWithTag = taskRepository.ReadAllByTag(tagId.ToString());
         if(tasksWithTag.Count() > 0 && !force) {
-            return Response.BadRequest;
+            return Response.Conflict;
         }
 
         context.Tags.Remove(entity);
