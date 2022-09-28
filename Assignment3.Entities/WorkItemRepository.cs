@@ -1,24 +1,6 @@
 namespace Assignment3.Entities;
 using Assignment3.Core;
 
-/*
-General 
-1. Trying to update or delete a non-existing entity should return NotFound.
-2. Create, Read, and Update should return a proper Response.
-3. Your are not allowed to write throw new ... - use the Response instead.
-4. Your code must use an in-memory database for testing.
-5. If a workItem, tag, or user is not found, return null.
-
-1. Only work items with the state New can be deleted from the database.
-2. Deleting a workItem which is Active should set its state to Removed.
-3. Deleting a workItem which is Resolved, Closed, or Removed should return Conflict.
-4. Creating a workItem will set its state to New and Created/StateUpdated to current time in UTC.
-5. Create/update workItem must allow for editing tags.
-6. Updating the State of a workItem will change the StateUpdated to current time in UTC.
-7. Assigning a user which does not exist should return BadRequest.
-8. WorkItemRepository may not depend on TagRepository or UserRepository.
-*/
-
 public class WorkItemRepository : IWorkItemRepository
 {
 
@@ -148,7 +130,7 @@ public class WorkItemRepository : IWorkItemRepository
         }
         return response;
     }
-    
+
     public Response Delete(int workItemId)
     {
         var entity = _context.WorkItems.Find(workItemId);
