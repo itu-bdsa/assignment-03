@@ -4,23 +4,38 @@ namespace Assignment3.Entities;
 public class UserRepository : IUserRepository
 {
     private readonly KanbanContext context;
+    private readonly TaskRepository taskRepository;
 
     public UserRepository(KanbanContext _context)
     {
         context = _context;
+        taskRepository = new TaskRepository(_context);
     }
     public (Response Response, int UserId) Create(UserCreateDTO user)
     {
-        var entity = new User
+
+        var entity = context.Users.FirstOrDefault(c => c.email == user.Email);
+        Response response;
+
+        if (entity is null)
         {
-            name = user.Name,
-            email = user.Email
-        };
+            entity = new User
+            {
+                name = user.Name,
+                email = user.Email
+            };
 
-        context.Users.Add(entity);
-        context.SaveChanges();
+            context.Users.Add(entity);
+            context.SaveChanges();
 
-        return (Response.Created, entity.id);
+            response = Response.Created;
+        }
+        else
+        {
+            response = Response.Conflict;
+        }
+
+        return (response, entity.id);
     }
 
     public Response Delete(int userId, bool force = false)
