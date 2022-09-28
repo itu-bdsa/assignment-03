@@ -34,7 +34,6 @@ public class TagRepositoryTests : IDisposable
 
         _context = context;
         _repository = new TagRepository(_context);
-
     }
 
     [Fact]
