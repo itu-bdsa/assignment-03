@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.Extensions.Configuration;
 
 namespace Assignment.Infrastructure
@@ -17,9 +18,17 @@ namespace Assignment.Infrastructure
     {
     }
 
+    public virtual DbSet<WorkItem> WorkItems => Set<WorkItem>();
+    public virtual DbSet<Tag> Tags => Set<Tag>();
+    public virtual DbSet<User> Users => Set<User>();
+
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
-      OnModelCreatingPartial(modelBuilder);
+      modelBuilder
+            .Entity<WorkItem>()
+            .Property(e => e.State)
+            .HasConversion(new EnumToStringConverter<State>());
+
     }
 
     partial void OnModelCreatingPartial(ModelBuilder modelBuilder);

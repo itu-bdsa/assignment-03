@@ -2,8 +2,6 @@ namespace Assignment.Infrastructure;
 
 public class WorkItem
 {
-
-
   public int Id { get; set; }
   [StringLength(100)]
   public string? Title { get; set; }
@@ -13,10 +11,4 @@ public class WorkItem
 
   public State State { get; set; }
 
-  // public
-
-}
-public enum State
-{
-  New, Active, Resolved, Closed, Removed
 }

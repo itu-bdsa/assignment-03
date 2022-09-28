@@ -2,7 +2,7 @@ namespace Assignment.Infrastructure;
 
 public class User
 {
-  public int Id { get; }
+  public int Id { get; set; }
 
   [StringLength(100)]
   public string? Name { get; set; }
