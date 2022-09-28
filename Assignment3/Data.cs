@@ -8,11 +8,11 @@ namespace Assignment3
     {
         public static void Seed(KanbanContext context)
         {
-            context.Database.ExecuteSqlRaw(TruncateString("Tags"));
+            /*context.Database.ExecuteSqlRaw(TruncateString("Tags"));
             context.Database.ExecuteSqlRaw(TruncateString("Users"));
             context.Database.ExecuteSqlRaw(TruncateString("Tasks"));
             context.Database.ExecuteSqlRaw(TruncateString("TagTask"));
-            context.SaveChanges();
+            context.SaveChanges();*/
 
             var frontend = new Tag("Frontend");
             var database = new Tag("Database");

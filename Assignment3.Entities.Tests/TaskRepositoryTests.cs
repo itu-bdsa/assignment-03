@@ -1,3 +1,5 @@
+using Assignment3.Core;
+
 namespace Assignment3.Entities.Tests;
 
 public class TaskRepositoryTests : IClassFixture<DatabaseFixture>
@@ -10,9 +12,18 @@ public class TaskRepositoryTests : IClassFixture<DatabaseFixture>
     }
 
     [Fact]
-    public void Read_Task_Return_UI_Layout()
+    public void Create_Task_Upholds_Rules()
     {
-        var task = dbFixture.TaskRepository.Read(1);
-        Assert.Equal("UI Layout", task.Title);
+        //Arrange
+        var taskDTO = new TaskCreateDTO("UI Layout", null, "Redo design of ui layout", null);
+
+
+        //Act
+        var (response, taskid) = dbFixture.TaskRepository.Create(taskDTO);
+        var task = dbFixture.Context.Tasks.Find(taskid);
+
+
+        Assert.Equal(Response.Created, response);
+        Assert.Equal(State.New, task.State);
     }
 }
