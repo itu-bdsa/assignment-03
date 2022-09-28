@@ -4,10 +4,12 @@ namespace Assignment3.Entities;
 public class TagRepository : ITagRepository
 {
     private readonly KanbanContext context;
+    private readonly TaskRepository taskRepository;
 
     public TagRepository(KanbanContext _context)
     {
         context = _context;
+        taskRepository = new TaskRepository(_context);
     }
 
     public (Response Response, int TagId) Create(TagCreateDTO tag)
@@ -43,6 +45,11 @@ public class TagRepository : ITagRepository
 
         if (entity.tasks.Count > 0 && !force)
         {
+            return Response.Conflict;
+        }
+
+        var tasksWithTag = taskRepository.ReadAllByTag(tagId.ToString());
+        if(tasksWithTag.Count() > 0 && !force) {
             return Response.Conflict;
         }
 
