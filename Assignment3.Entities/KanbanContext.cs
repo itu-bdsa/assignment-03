@@ -14,7 +14,7 @@ public partial class KanbanContext : DbContext
         {
         }
 
-    public virtual DbSet<Task> Tasks { get; set; } = null!;
+    public virtual DbSet<WorkItem> WorkItems { get; set; } = null!;
     public virtual DbSet<User> Users { get; set; } = null!;
     public virtual DbSet<Tag> Tags { get; set; } = null!;
 
@@ -40,7 +40,7 @@ public partial class KanbanContext : DbContext
             modelBuilder.Entity<WorkItem>(entity => 
             {
                 entity.Property(e => e.Title).HasMaxLength(50).IsRequired();
-                entity.Property(e => e.state).HasConversion(new EnumToStringConverter<State>()).IsRequired();
+                entity.Property(e => e.state).HasConversion(new EnumToStringConverter<Core.State>()).IsRequired();
                 entity.HasMany<Tag>(s => s.Tags)
                 .WithMany(c => c.WorkItems);
             });
