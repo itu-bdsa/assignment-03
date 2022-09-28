@@ -6,13 +6,13 @@ using Microsoft.Extensions.Configuration;
 
 namespace Assignment.Infrastructure
 {
-  public partial class kanbanContext : DbContext
+  public partial class KanbanContext : DbContext
   {
-    public kanbanContext()
+    public KanbanContext()
     {
     }
 
-    public kanbanContext(DbContextOptions<kanbanContext> options)
+    public KanbanContext(DbContextOptions<KanbanContext> options)
         : base(options)
     {
     }

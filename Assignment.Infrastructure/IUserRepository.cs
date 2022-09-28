@@ -1,5 +1,6 @@
 namespace Assignment.Infrastructure;
 
-public class UserRepository
+public class IUserRepository
 {
+
 }
