@@ -22,7 +22,7 @@ public partial class WorkItem
         Description = description;
         Tags = tags;
         state = State.New;
-        Created = DateTime.Now;
-        StateUpdated = DateTime.Now;
+        Created = DateTime.UtcNow;
+        StateUpdated = DateTime.UtcNow;
     }
 }

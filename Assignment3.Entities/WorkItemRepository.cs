@@ -40,7 +40,7 @@ public class WorkItemRepository : IWorkItemRepository
             
             if (assignedToTemp is null && workItem.AssignedToId.Value is not 0){
                 return (Response.NotFound, 0);
-            }  
+            } 
             
             else{
                 ICollection<Tag> tagsTemp = new HashSet<Tag>();
@@ -54,13 +54,11 @@ public class WorkItemRepository : IWorkItemRepository
 
                 response = Response.Created;
             }
-
         }
         else
         {
             response = Response.Conflict;
         }
-
         return (response, entity.Id);
     }
     public IReadOnlyCollection<WorkItemDTO> ReadAll()
@@ -138,19 +136,19 @@ public class WorkItemRepository : IWorkItemRepository
             
             if (WorkItem.Description != null) {entity.Description = WorkItem.Description;}
 
-            entity.Tags = WorkItem.Tags.Select(t => _context.Tags.Find(t)).ToArray();
+            entity.Tags = _context.Tags.Where(t => WorkItem.Tags.Any(x => x == t.Name)).ToArray();
 
             if (entity.state != WorkItem.State){
                 entity.state = WorkItem.State;
-                entity.StateUpdated = DateTime.Now;
+                entity.StateUpdated = DateTime.UtcNow;
             }
                 
             _context.SaveChanges();
             response = Response.Updated;
         }
-        
         return response;
     }
+    
     public Response Delete(int workItemId)
     {
         var entity = _context.WorkItems.Find(workItemId);
@@ -168,6 +166,7 @@ public class WorkItemRepository : IWorkItemRepository
 
             case State.Active:
                 entity.state = State.Removed;
+                entity.StateUpdated = DateTime.UtcNow;
                 _context.SaveChanges();
                 response = Response.Updated;
             break;
