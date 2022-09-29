@@ -57,7 +57,18 @@ public sealed class TagRepositoryTests : IDisposable
     [Fact]
     public void create_already_existing_tag_should_return_Conflict_and_minus_one() => _repository.Create(new TagCreateDTO("tagName2")).Should().Be((Response.Conflict, -1));
     
-    
+    [Fact]
+    public void read_id_1_should_return_tag_dto_with_id_1_and_name_tagName1() => _repository.Read(1).Should().Be(new TagDTO(1,"tagName1"));
+
+    [Fact]
+    public void read_id_5_should_return_null() => _repository.Read(5).Should().Be(null);
+
+    [Fact]
+    public void readAll_should_return_four_tags() => _repository.ReadAll().Should().Equal(new TagDTO[]{ new TagDTO(1,"tagName1"),
+                                                                                                     new TagDTO(2, "tagName2"),
+                                                                                                     new TagDTO(3, "tagName3"),
+                                                                                                     new TagDTO(4, "tagName4")});
+
     public void Dispose()
     {
         _context.Dispose();
