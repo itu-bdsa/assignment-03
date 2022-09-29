@@ -29,7 +29,7 @@ public class WorkItemRepository : IWorkItemRepository
                 if (workItem.Tags is not null && _context.Tags is not null){
                     tagsTemp = _context.Tags.Where(t => workItem.Tags.Any(x => x == t.Name)).ToArray();
                 }
-                entity = new WorkItem{Title = workItem.Title, AssignedTo = assignedToTemp, Description = workItem.Description, Tags = tagsTemp};
+                entity = new WorkItem{Title = workItem.Title, AssignedTo = assignedToTemp, Description = workItem.Description, Tags = tagsTemp, state = State.New, Created = DateTime.UtcNow, StateUpdated = DateTime.UtcNow};
 
                 _context.WorkItems.Add(entity);
                 _context.SaveChanges();
