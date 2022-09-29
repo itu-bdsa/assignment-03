@@ -8,15 +8,15 @@ public class User
         this.email = email;
     }
 
-    public int id {get; set;}
+    public int id { get; set; }
 
     [StringLength(100)]
-    public string name {get; set;} 
+    public string name { get; set; }
 
     [StringLength(100)]
     [EmailAddress]
-    public string email {get; init;}
+    public string email { get; init; }
 
-    public ICollection<Task> tasks {get; set;}  = null!;
+    public ICollection<Task> tasks { get; set; } = null!;
 
 }

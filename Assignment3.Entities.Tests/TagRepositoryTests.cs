@@ -16,7 +16,7 @@ public class TagRepositoryTests
         context.Database.EnsureCreated();
         var _task = new Task("repetitive coding", State.Active);
         var _tag = new Tag("Sir Phil");
-        _tag.Tasks = new List<Task>{_task};
+        _tag.Tasks = new List<Task> { _task };
         context.Tags.Add(new Tag("Smadre manden"));
         context.Tags.Add(_tag);
 
@@ -67,18 +67,19 @@ public class TagRepositoryTests
     public void delete_assigned_tag_no_force_returns_conflict()
     {
         var result = _repo.Delete(2);
-        Assert.Equal(Response.Conflict,result);
+        Assert.Equal(Response.Conflict, result);
     }
 
-        [Fact]
-    public void delete_assigned_tag_with_force_returns_deleted(){
+    [Fact]
+    public void delete_assigned_tag_with_force_returns_deleted()
+    {
         var result = _repo.Delete(2, true);
-        Assert.Equal(Response.Deleted,result);
+        Assert.Equal(Response.Deleted, result);
     }
-/* 
-Tags which are assigned to a task may only be deleted using the force.
-Trying to delete a tag in use without the force should return Conflict.
-Trying to create a tag which exists already should return Conflict. */
+    /* 
+    Tags which are assigned to a task may only be deleted using the force.
+    Trying to delete a tag in use without the force should return Conflict.
+    Trying to create a tag which exists already should return Conflict. */
 
     [Fact]
     public void Dispose()
