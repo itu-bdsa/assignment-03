@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Assignment3.Core;
 
 namespace Assignment3.Entities;
 
@@ -31,18 +32,14 @@ public partial class KanbanContext : DbContext
             modelBuilder.Entity<Tag>(entity =>
             {
                 entity.Property(e => e.Name).HasMaxLength(50).IsRequired();
-                entity.HasMany<WorkItem>(s => s.WorkItems)
-                .WithMany(c => c.Tags);
-
-
+                entity.HasMany(s => s.WorkItems).WithMany(c => c.Tags);
             });
 
             modelBuilder.Entity<WorkItem>(entity => 
             {
                 entity.Property(e => e.Title).HasMaxLength(50).IsRequired();
                 entity.Property(e => e.state).HasConversion(new EnumToStringConverter<State>()).IsRequired();
-                entity.HasMany<Tag>(s => s.Tags)
-                .WithMany(c => c.WorkItems);
+                entity.HasMany(s => s.Tags).WithMany(s => s.WorkItems);
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -10,29 +10,83 @@ public class TagRepository : ITagRepository
     {
         _context = context;
     }
-//Tags which are assigned to a workItem may only be deleted using the force.
-//Trying to delete a tag in use without the force should return Conflict.
-//Trying to create a tag which exists already should return Conflict.
+
+
+
     public (Response Response, int TagId) Create(TagCreateDTO tag){
-        var entity = _context.Tags.FirstOrDefault(c => c.Name == tag.Name);
-        Response response;
-        return (Response.BadRequest, 0);
+        var entity = (from c in _context.Tags
+                        where c.Name == tag.Name
+                        select c).FirstOrDefault();
+
+        if (entity is null)
+        {
+            entity = new Tag{Name = tag.Name};
+
+            _context.Tags.Add(entity);
+            _context.SaveChanges();
+
+            return (Response.Created, entity.id);
+        }
+        else
+        {
+            return (Response.Conflict, -1);
+        }
     }
 
     public IReadOnlyCollection<TagDTO> ReadAll() {
-        return null;
+        var tags = from c in _context.Tags
+                 select new TagDTO(c.id, c.Name);
+        return tags.ToArray();
     }
 
     public TagDTO Read(int tagID) {
-        return null;
+        var tag = (from c in _context.Tags
+                 where c.id == tagID
+                 select c).FirstOrDefault();
+        if (tag is null)
+        {
+            return null;
+        }
+        else{
+            return new TagDTO(tag.id, tag.Name);
+        }
     }
 
     public Response Update(TagUpdateDTO tag) {
-        return Response.BadRequest;
+        var entity = _context.Tags.Find(tag.Id);
+
+        if (entity is null)
+        {
+            return Response.NotFound;
+        }
+        else
+        {
+            entity.Name = tag.Name;
+            _context.SaveChanges();
+            return Response.Updated;
+        }
     }
 
     public Response Delete(int tagID, bool force = false) {
-        return Response.BadRequest;
+        var tag = (from c in _context.Tags
+                 where c.id == tagID
+                 select c).FirstOrDefault();
+        if (tag is null)
+        {
+            return Response.NotFound;
+        }
+        else if (tag.WorkItems.Any())
+        {
+            if (force){
+                _context.Tags.Remove(tag);
+                _context.SaveChanges();
+                return Response.Deleted;
+            }
+            return Response.Conflict;
+        }
+        _context.Tags.Remove(tag);
+        _context.SaveChanges();
+        return Response.Deleted;
     }
 }
 
