@@ -31,31 +31,31 @@ public class TaskRepository
 
     public IReadOnlyCollection<TaskDTO> ReadAll()
     {
-        return context.Tasks.Select(t => new TaskDTO(t.Id, t.Title, t.AssignedTo.name, t.Tags.Select(x => x.Name).ToArray(), t.State)).ToList().AsReadOnly();
+        return context.Tasks.Select(t => new TaskDTO(t.Id, t.Title, t.AssignedTo.Name, t.Tags.Select(x => x.Name).ToArray(), t.State)).ToList().AsReadOnly();
     }
     public IReadOnlyCollection<TaskDTO> ReadAllRemoved()
     {
-        return context.Tasks.Select(t => new TaskDTO(t.Id, t.Title, t.AssignedTo.name, t.Tags.Select(x => x.Name).ToArray(), State.Removed)).ToList().AsReadOnly();
+        return context.Tasks.Select(t => new TaskDTO(t.Id, t.Title, t.AssignedTo.Name, t.Tags.Select(x => x.Name).ToArray(), State.Removed)).ToList().AsReadOnly();
     }
     public IReadOnlyCollection<TaskDTO> ReadAllByTag(string tag)
     {
         var tasks = from t in context.Tasks
                     where t.Tags.Select(x => x.Name).Contains(tag)
-                    select new TaskDTO(t.Id, t.Title, t.AssignedTo.name, t.Tags.Select(x => x.Name).ToArray(), t.State);
+                    select new TaskDTO(t.Id, t.Title, t.AssignedTo.Name, t.Tags.Select(x => x.Name).ToArray(), t.State);
         return tasks.ToArray();
     }
     public IReadOnlyCollection<TaskDTO> ReadAllByUser(int userId)
     {
         var tasks = from t in context.Tasks
-                    where t.AssignedTo.id == userId
-                    select new TaskDTO(t.Id, t.Title, t.AssignedTo.name, t.Tags.Select(x => x.Name).ToArray(), t.State);
+                    where t.AssignedTo.Id == userId
+                    select new TaskDTO(t.Id, t.Title, t.AssignedTo.Name, t.Tags.Select(x => x.Name).ToArray(), t.State);
         return tasks.ToArray();
     }
     public IReadOnlyCollection<TaskDTO> ReadAllByState(State state)
     {
         var tasks = from t in context.Tasks
                     where t.State == state
-                    select new TaskDTO(t.Id, t.Title, t.AssignedTo.name, t.Tags.Select(x => x.Name).ToArray(), t.State);
+                    select new TaskDTO(t.Id, t.Title, t.AssignedTo.Name, t.Tags.Select(x => x.Name).ToArray(), t.State);
         return tasks.ToArray();
     }
     public TaskDetailsDTO Read(int taskId)
@@ -63,7 +63,7 @@ public class TaskRepository
         var task = context.Tasks.Find(taskId);
         if (task != null)
         {
-            return new TaskDetailsDTO(task.Id, task.Title, task.Description, task.Created, task.AssignedTo.name, task.Tags.Select(x => x.Name).ToArray(), task.State, task.StateUpdated);
+            return new TaskDetailsDTO(task.Id, task.Title, task.Description, task.Created, task.AssignedTo.Name, task.Tags.Select(x => x.Name).ToArray(), task.State, task.StateUpdated);
         }
         else
         {
