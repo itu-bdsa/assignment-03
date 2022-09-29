@@ -54,6 +54,7 @@ public class UserRepository : IUserRepository
         else
         {
             entity.Name = user.Name;
+            entity.Email = user.Email;
             _context.SaveChanges();
             return Response.Updated;
         }  
