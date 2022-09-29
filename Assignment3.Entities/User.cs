@@ -4,19 +4,19 @@ public class User
 {
     public User(string name, string email)
     {
-        this.name = name;
-        this.email = email;
+        this.Name = name;
+        this.Email = email;
     }
 
-    public int id {get; set;}
+    public int Id {get; set;}
 
     [StringLength(100)]
-    public string name {get; set;} 
+    public string Name {get; set;} 
 
     [StringLength(100)]
     [EmailAddress]
-    public string email {get; init;}
+    public string Email {get; init;}
 
-    public ICollection<Task> tasks {get; set;}  = null!;
+    public ICollection<Task> Tasks {get; set;}  = null!;
 
 }
