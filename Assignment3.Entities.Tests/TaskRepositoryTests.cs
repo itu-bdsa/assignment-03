@@ -90,11 +90,6 @@ public class TaskRepositoryTests
 
     }
 
-    /* 
-    Tags which are assigned to a task may only be deleted using the force.
-    Trying to delete a tag in use without the force should return Conflict.
-    Trying to create a tag which exists already should return Conflict. */
-
     [Fact]
     public void Dispose()
     {
