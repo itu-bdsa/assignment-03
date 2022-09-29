@@ -107,6 +107,42 @@ public class UserRepositoryTests
         state.Should().Be(Response.Conflict);
     }
 
+    [Fact]
+    public void Update_User_That_Does_Exist() {
+        // Arrange
+        var user = new UserUpdateDTO(1, "user3", "user3");
+
+        // Act
+        var update = _repository.Update(user);
+
+        // Assert
+        update.Should().Be(Response.Updated);
+    }
+
+    [Fact]
+    public void Update_User_That_Doesnt_Exist() {
+        // Arrange
+        var user = new UserUpdateDTO(500, "user3", "user3");
+
+        // Act
+        var update = _repository.Update(user);
+
+        // Assert
+        update.Should().Be(Response.NotFound);
+    }
+
+    [Fact]
+    public void Delete_User_That_Doesnt_Exist() {
+        // Arrange
+        var id = 500;
+
+        // Act
+        var state = _repository.Delete(id);
+
+        // Assert
+        state.Should().Be(Response.NotFound);
+    }
+
     public void Dispose()
     {
         _context.Dispose();

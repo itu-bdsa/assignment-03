@@ -30,12 +30,19 @@ public class TaskRepository : ITaskRepository
         {
             return Response.NotFound;
         }
-        else
+        else if(taskToDelete.state == State.New)
         {
             context.Tasks.Remove(taskToDelete);
             context.SaveChanges();
 
             return Response.Deleted;
+        } else if(taskToDelete.state == State.Active){
+            taskToDelete.state = State.Removed;
+            context.SaveChanges();
+
+            return Response.Updated;
+        } else {
+            return Response.Conflict;
         }
 
 
@@ -45,10 +52,11 @@ public class TaskRepository : ITaskRepository
     {
         var taskToRead = from c in context.Tasks
                          where c.id == taskId
-                         select new TaskDetailsDTO(c.id, c.title, c.description, new DateTime().AddYears(-5), c.assignedTo.name, (IReadOnlyCollection<string>)c.tags, c.state, new DateTime().AddDays(2));
+                         select new TaskDetailsDTO(c.id, c.title, c.description, c.Created, c.assignedTo.name, c.state, c.StateUpdated);
 
 
         return taskToRead.FirstOrDefault();
+    
     }
 
     public IReadOnlyCollection<TaskDTO> ReadAll()
@@ -114,6 +122,13 @@ public class TaskRepository : ITaskRepository
             taskToUpdate.title = task.Title;
             taskToUpdate.description = task.Description;
             taskToUpdate.state = task.State;
+            taskToUpdate.StateUpdated = DateTime.Now;
+
+            var newUser = context.Users.FirstOrDefault(t => t.id == task.AssignedToId);
+            if(newUser == null){
+                return Response.BadRequest;
+            }
+            taskToUpdate.assignedTo = newUser;
             
 
             context.SaveChanges();

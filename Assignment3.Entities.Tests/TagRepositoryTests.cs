@@ -103,6 +103,42 @@ public class TagRepositoryTests : IDisposable
         state.Should().Be(Response.Conflict);
     }
 
+    [Fact]
+    public void Update_Tag_That_Does_Exist() {
+        // Arrange
+        var tag = new TagUpdateDTO(1, "Tag4");
+
+        // Act
+        var update = _repository.Update(tag);
+
+        // Assert
+        update.Should().Be(Response.Updated);
+    }
+
+    [Fact]
+    public void Update_Tag_That_Doesnt_Exist() {
+        // Arrange
+        var tag = new TagUpdateDTO(500, "Tag4");
+
+        // Act
+        var update = _repository.Update(tag);
+
+        // Assert
+        update.Should().Be(Response.NotFound);
+    }
+
+    [Fact]
+    public void Delete_tag_That_Doesnt_Exist() {
+        // Arrange
+        var id = 500;
+
+        // Act
+        var state = _repository.Delete(id);
+
+        // Assert
+        state.Should().Be(Response.NotFound);
+    }
+
     public void Dispose()
     {
         _context.Dispose();
