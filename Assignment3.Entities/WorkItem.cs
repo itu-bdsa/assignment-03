@@ -9,4 +9,8 @@ public partial class WorkItem
     public string? Description { get; set; }
     public State state { get; set; }
     public ICollection<Tag> Tags {get; set;} = new List<Tag>();
+
+    public DateTime Created {get; set;}
+    public DateTime StateUpdated {get; set;}
+
 }
