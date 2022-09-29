@@ -29,9 +29,9 @@ public class UserRepositoryTests : IDisposable
 [Fact]
 public void createUserreturnsCreatedWithUser() {
 //Arrange
-var (response, userId) = _repository.Create(new UserCreateDTO("Clara", "Clara@gmail.com"));
 var user = new UserDTO(4, "Clara", "Clara@gmail.com");
 //Act
+var (response, userId) = _repository.Create(new UserCreateDTO("Clara", "Clara@gmail.com"));
 //Assert
 response.Should().Be(Response.Created);
 
@@ -39,20 +39,38 @@ userId.Should().Be(user.Id);
 }
 
 [Fact]
+public void createUserreturnsConflictIfUserExists() {
+//Arrange
+//Act
+var (response, userId) = _repository.Create(new UserCreateDTO("Bob", "bob@gmail.com"));
+//Assert
+response.Should().Be(Response.Conflict);
+}
+
+[Fact]
 public void readGivenIdReturnsUser() {
 //Arrange
-var actual = _repository.Read(1);
 var expected = new UserDTO(1, "Bob", "bob@gmail.com");
 //Act
+var actual = _repository.Read(1);
 //Assert
 actual.Should().Be(expected);
 }
 
 [Fact]
+public void readGivenNonExistingIdReturnsNull() {
+//Arrange
+//Act
+var actual = _repository.Read(10);
+//Assert
+actual.Should().Be(null);
+}
+
+[Fact]
 public void readAllReturnsAllUsers() {
 //Arrange
-var actual = _repository.ReadAll().Count();
 //Act
+var actual = _repository.ReadAll().Count();
 //Assert
 actual.Should().Be(3);
 }
@@ -71,6 +89,16 @@ updatedEmail.Should().Be("BobsnyeMail@gmail.com");
 }
 
 [Fact]
+public void updateReturnsNotFoundWhenGivenNonExistingUser() {
+//Arrange
+var user = new UserUpdateDTO(7, "Forkert Bruger,", "Forkertbruger@gmail.com");
+//Act
+var Response = _repository.Update(user);
+//Assert
+Response.Should().Be(Response.NotFound);
+}
+
+[Fact]
 public void DeleteReturnsDeletedWhenExistingUserIdGiven() {
 //Arrange
 //Act
@@ -80,6 +108,16 @@ var ReadResponse = _repository.Read(1);
 Response.Should().Be(Response.Deleted);
 ReadResponse.Should().Be(null);
 }
+
+[Fact]
+public void DeleteReturnsNotFoundWhenNonExistingUserIdGiven() {
+//Arrange
+//Act
+var Response = _repository.Delete(11);
+//Assert
+Response.Should().Be(Response.NotFound);
+}
+
 
 
 
