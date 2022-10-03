@@ -21,7 +21,7 @@
 * Group 21: frhc, selb, bath
 * Group 22: clly, biha, sibh
 * Group 23: chbl, luha, siar
-* Group 24: okre
+* Group 24: 
 * Group 25: stmp, mbjn
 * Group 26: crco, rogy, jwni
 * Group 27: elbr, kbej, emno
